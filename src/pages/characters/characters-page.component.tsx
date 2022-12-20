@@ -26,10 +26,9 @@ const Characters = (props: Props) => {
     <Grid
       sx={{ color: "#fff" }}
       container
-      gap={5}
-      paddingX={15}
+      spacing={3}
+      paddingX={5}
       paddingTop={5}
-      justifyContent="center"
     >
       {data?.characters?.results?.map((char) => (
         <MediaCard
