@@ -42,18 +42,14 @@ export default function MediaCard(props: Props) {
     console.log("Is Show:", isShowDetails);
   }, [isShowDetails]);
   return (
-    <Grid xl={2} lg={3} md={4} sm={6} xs={12} item>
+    <Grid xl={1.7} lg={3} md={4} sm={6} xs={12} item>
       <Card
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         sx={{
-          // width: "300px",
-          // height: "300px",
           ":hover": { transform: "scale(1.05)" },
           position: "relative",
-          // cursor: "pointer",
           backgroundColor: "transparent",
-          border: "2px solid #fbf976",
           color: "#fff",
         }}
       >
