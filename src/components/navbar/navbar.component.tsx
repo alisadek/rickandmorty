@@ -23,7 +23,7 @@ export default function NavBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Button sx={{ color: "#fff", alignItems: "center" }}>Home</Button>
+            <Button onClick={() => navigate("/")}>Home</Button>
           </Grid>
           <Grid
             width="40%"
