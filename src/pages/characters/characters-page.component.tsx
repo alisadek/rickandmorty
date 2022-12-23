@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { GET_ALL_CHARACTERS } from "../../queries.graphql";
 import { Characters as CharactersType } from "../../__generated__/graphql";
@@ -10,10 +10,18 @@ import CharactersCollection from "./characters-collection/characters-collection.
 import Stack from "@mui/material/Stack";
 
 type Props = {};
-
+type Filters = Record<string, string>;
 const Characters = (props: Props) => {
   const [selectedPage, setSelectedPage] = useState(1);
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [activeFilters, setActiveFilters] = useState<Filters>({
+    status: "",
+    species: "",
+    gender: "",
+  });
+  const handleFilterChange = (filter: Record<string, string>) => {
+    setActiveFilters({ ...activeFilters, ...filter });
+  };
   const { data, loading, error } = useQuery<{ characters: CharactersType }>(
     GET_ALL_CHARACTERS,
     {
@@ -24,6 +32,7 @@ const Characters = (props: Props) => {
     setSelectedPage(value);
 
   if (error) <p style={{ color: "#fff" }}>{`${error?.message}`}</p>;
+
   const handleSearchChange = (
     event: React.SyntheticEvent<Element, Event>,
     value: string
@@ -45,13 +54,18 @@ const Characters = (props: Props) => {
       })),
     [data]
   );
-
+  useEffect(() => {
+    console.log("Active Filters: ", activeFilters);
+  }, [activeFilters]);
   return (
     <Grid container xs={12} height="95vh">
       <Grid container item xs={2}>
         <SideNav
           loading={loading}
           placeholder="Search Characters"
+          withFilters
+          onFilterChange={handleFilterChange}
+          activeFilters={activeFilters}
           onSearchInputChange={searchDelayed}
           inputValue={searchValue}
           options={options}
