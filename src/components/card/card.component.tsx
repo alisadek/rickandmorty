@@ -38,9 +38,7 @@ export default function MediaCard(props: Props) {
   const handleMouseLeave = () => {
     setIsShowDetails(false);
   };
-  React.useEffect(() => {
-    console.log("Is Show:", isShowDetails);
-  }, [isShowDetails]);
+
   return (
     <Grid xl={1.7} lg={3} md={4} sm={6} xs={12} item flexGrow={0}>
       <Card
