@@ -6,7 +6,7 @@ import { Maybe } from "../../__generated__/graphql";
 import { CardContent, Chip } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import Grid from "@mui/material/Grid";
-
+import _ from "lodash";
 type Props = {
   image?: Maybe<string>;
   name?: Maybe<string>;
@@ -42,7 +42,7 @@ export default function MediaCard(props: Props) {
     console.log("Is Show:", isShowDetails);
   }, [isShowDetails]);
   return (
-    <Grid xl={1.7} lg={3} md={4} sm={6} xs={12} item>
+    <Grid xl={1.7} lg={3} md={4} sm={6} xs={12} item flexGrow={0}>
       <Card
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -80,20 +80,18 @@ export default function MediaCard(props: Props) {
                 padding: "0 10px",
               }}
             >
-              <Typography gutterBottom variant="h5" component="div">
-                {name}
+              <Typography
+                title={name as string}
+                gutterBottom
+                variant="h5"
+                component="div"
+              >
+                {_.truncate(name as string, { length: 19 })}
               </Typography>
               <Typography variant="body1">Species: {species}</Typography>
             </CardContent>
           )}
         </CardActionArea>
-
-        {/* <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {name}
-        </Typography>
-        <Typography variant="body2">Species: {species}</Typography>
-      </CardContent> */}
       </Card>
     </Grid>
   );
