@@ -1,18 +1,16 @@
-import { Grid, SelectChangeEvent, Typography } from "@mui/material";
+import { Grid, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { Maybe } from "../../__generated__/graphql";
 import SearchBar from "../search-bar/search-bar.component";
 import { Option } from "../types";
 
 type Props = {
-  name?: Maybe<string>;
   loading: boolean;
   onSearchInputChange: (
     event: React.SyntheticEvent<Element, Event>,
     value: string
   ) => void;
   options: Option<unknown>[] | undefined;
-  onSelectChange: (event: SelectChangeEvent, value: any) => void;
+  onSelectChange?: (event: SelectChangeEvent, value: any) => void;
   inputValue?: string;
   selectedValue?: Option<unknown>;
   placeholder?: string;
@@ -20,7 +18,6 @@ type Props = {
 
 const SideNav = (props: Props) => {
   const {
-    name,
     loading,
     onSearchInputChange,
     onSelectChange,
@@ -30,7 +27,7 @@ const SideNav = (props: Props) => {
     placeholder,
   } = props;
   return (
-    <Grid item bgcolor="#121111c2" xs={2} height="100%" padding={3}>
+    <Grid xs={12} item bgcolor="#121111c2" height="100%" padding={3}>
       <SearchBar
         options={options}
         placeholder={placeholder}
@@ -40,9 +37,6 @@ const SideNav = (props: Props) => {
         onSelectChange={onSelectChange}
         loading={loading}
       />
-      <Typography variant="h4" component="div" color="white">
-        {name}
-      </Typography>
     </Grid>
   );
 };

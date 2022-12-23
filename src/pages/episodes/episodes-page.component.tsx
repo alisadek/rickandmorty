@@ -7,26 +7,27 @@ import {
   Episodes,
   Maybe,
 } from "../../__generated__/graphql";
-import MediaCard from "../../components/card/card.component";
 import { useQuery } from "@apollo/client";
 import { SelectChangeEvent, Stack, Typography } from "@mui/material";
-import LoadingCard from "../../components/card/card-loading.component";
 import SideNav from "../../components/side-nav/side-nav.component";
 import { Option } from "../../components/types";
 import Pagination from "@mui/material/Pagination";
 import { debounce } from "lodash";
+import { getCharsPerPage, getNumOfPages } from "../../utils/pagination.utils";
+import CharactersCollection from "../characters/characters-collection/characters-collection.component";
+import EpisodeInfo from "./episode-info/episode-info.component";
 
 type Props = {};
 const Characters = (props: Props) => {
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
-  const [selectedEpisode, setSelectedEpisode] =
-    useState<Option<Episode> | null>();
+  const [searchValue, setSearchValue] = useState<string | undefined>("");
+  const [selectedEpisode, setSelectedEpisode] = useState<Option<Episode>>();
   const recordsPerPage = 21;
   const [selectedPage, setSelectedPage] = useState(1);
   const numOfPages = useMemo(() => {
     if (selectedEpisode)
-      return Math.ceil(
-        selectedEpisode?.value.characters.length / recordsPerPage
+      return getNumOfPages(
+        recordsPerPage,
+        selectedEpisode?.value.characters.length
       );
   }, [selectedEpisode]);
   const {
@@ -55,10 +56,13 @@ const Characters = (props: Props) => {
     setSelectedPage(1);
   }, [selectedEpisode]);
   useEffect(() => {
-    const newChars = selectedEpisode?.value?.characters.slice(
-      recordsPerPage * selectedPage - recordsPerPage,
-      recordsPerPage * selectedPage
-    );
+    const newChars =
+      selectedEpisode &&
+      getCharsPerPage(
+        selectedEpisode?.value?.characters,
+        recordsPerPage,
+        selectedPage
+      );
     setCharacters(newChars);
   }, [selectedEpisode, selectedPage]);
 
@@ -68,7 +72,6 @@ const Characters = (props: Props) => {
   const handleSelectChange = (e: SelectChangeEvent, value: Option<Episode>) => {
     setSelectedEpisode(value);
   };
-  const LOADING_LIST = Array(20).fill(0, 0);
   if (epError) <p style={{ color: "#fff" }}>{`${epError?.message}`}</p>;
   const handleSearchChange = (
     event: React.SyntheticEvent<Element, Event>,
@@ -80,58 +83,34 @@ const Characters = (props: Props) => {
 
   return (
     <Grid container xs={12} height="95vh">
-      <SideNav
-        loading={epLoading}
-        placeholder="Select Episode"
-        onSearchInputChange={searchDelayed}
-        onSelectChange={handleSelectChange}
-        inputValue={searchValue}
-        options={options}
-        name={epData?.episodes?.results?.[0]?.name}
-      />
+      <Grid container item xs={2}>
+        <SideNav
+          loading={epLoading}
+          placeholder="Search Episode"
+          onSearchInputChange={searchDelayed}
+          onSelectChange={handleSelectChange}
+          inputValue={searchValue}
+          options={options}
+        />
+      </Grid>
+
       {!selectedEpisode ? (
-        <Grid alignItems="center" justifyContent="center" container xs={10}>
+        <Grid
+          xs={10}
+          alignItems="center"
+          justifyContent="center"
+          container
+          item
+        >
           <Typography variant="h4" color="white">
             Select an Episode
           </Typography>
         </Grid>
       ) : (
-        <Grid item container xs={10} paddingX={5}>
+        <Grid xs={10} item container paddingX={5}>
           <Stack width="100%">
-            <Stack>
-              <Typography variant="h3" color="white">
-                {selectedEpisode?.value.name}
-              </Typography>
-              <Typography variant="h5" color="white">
-                {`Episode: ${selectedEpisode?.value.episode}`}
-              </Typography>
-              <Typography variant="h5" color="white">
-                {`Created: ${
-                  selectedEpisode?.value.created &&
-                  new Date(selectedEpisode?.value.created).toLocaleDateString()
-                }`}
-              </Typography>
-            </Stack>
-            <Grid
-              sx={{ color: "#fff", maxHeight: "90vh" }}
-              container
-              spacing={3}
-              paddingTop={5}
-              justifyContent="flex-start"
-              justifySelf="flex-start"
-            >
-              {epLoading
-                ? LOADING_LIST.map(() => <LoadingCard />)
-                : characters?.map((char) => (
-                    <MediaCard
-                      key={char?.id}
-                      image={char?.image}
-                      name={char?.name}
-                      species={char?.species}
-                      status={char?.status}
-                    />
-                  ))}
-            </Grid>
+            <EpisodeInfo episode={selectedEpisode?.value} />
+            <CharactersCollection characters={characters} loading={epLoading} />
             {selectedEpisode?.value.characters.length > recordsPerPage && (
               <Pagination
                 sx={{ position: "absolute", bottom: "20px", right: "40px" }}
