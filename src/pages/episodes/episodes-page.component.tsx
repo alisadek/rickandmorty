@@ -14,6 +14,7 @@ import LoadingCard from "../../components/card/card-loading.component";
 import SideNav from "../../components/side-nav/side-nav.component";
 import { Option } from "../../components/types";
 import Pagination from "@mui/material/Pagination";
+import { debounce } from "lodash";
 
 type Props = {};
 const Characters = (props: Props) => {
@@ -58,28 +59,31 @@ const Characters = (props: Props) => {
       recordsPerPage * selectedPage - recordsPerPage,
       recordsPerPage * selectedPage
     );
-
     setCharacters(newChars);
   }, [selectedEpisode, selectedPage]);
+
   const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) =>
     setSelectedPage(value);
+
+  const handleSelectChange = (e: SelectChangeEvent, value: Option<Episode>) => {
+    setSelectedEpisode(value);
+  };
+  const LOADING_LIST = Array(20).fill(0, 0);
+  if (epError) <p style={{ color: "#fff" }}>{`${epError?.message}`}</p>;
   const handleSearchChange = (
     event: React.SyntheticEvent<Element, Event>,
     value: string
   ) => {
     setSearchValue(value);
   };
-  const handleSelectChange = (e: SelectChangeEvent, value: Option<Episode>) => {
-    setSelectedEpisode(value);
-  };
-  const LOADING_LIST = Array(20).fill(0, 0);
-  if (epError) <p style={{ color: "#fff" }}>{`${epError?.message}`}</p>;
+  const searchDelayed = debounce(handleSearchChange, 200);
+
   return (
     <Grid container xs={12} height="95vh">
       <SideNav
         loading={epLoading}
         placeholder="Select Episode"
-        onSearchInputChange={handleSearchChange}
+        onSearchInputChange={searchDelayed}
         onSelectChange={handleSelectChange}
         inputValue={searchValue}
         options={options}
