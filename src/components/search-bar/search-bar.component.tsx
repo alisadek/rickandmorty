@@ -7,7 +7,7 @@ import { Option } from "../types";
 type Props = {
   loading: boolean;
   options: Option<unknown>[] | undefined;
-  onSelectChange: (event: any, value: Option<unknown> | null) => void;
+  onSelectChange?: (event: any, value: Option<unknown> | null) => void;
   value?: Option<unknown>;
   inputValue?: string;
   placeholder?: string;
@@ -36,6 +36,7 @@ export default function SearchBar(props: Props) {
       inputValue={props.inputValue}
       placeholder={placeholder || "Search..."}
       onChange={onSelectChange}
+      clearOnBlur={false}
       loading={loading}
       renderInput={(params) => (
         <TextField
@@ -44,12 +45,12 @@ export default function SearchBar(props: Props) {
           InputProps={{
             ...params.InputProps,
             endAdornment: (
-              <React.Fragment>
+              <>
                 {loading ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </>
             ),
           }}
         />
