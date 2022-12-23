@@ -8,6 +8,7 @@ export const GET_ALL_CHARACTERS = gql`
         name
         species
         image
+        status
         location {
           id
           name
@@ -26,6 +27,13 @@ export const GET_EPISODES = gql`
         air_date
         created
         episode
+        characters {
+          id
+          name
+          species
+          status
+          image
+        }
       }
     }
   }

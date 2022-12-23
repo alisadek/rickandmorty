@@ -1,22 +1,45 @@
-import { AutocompleteInputChangeReason, Grid, Typography } from "@mui/material";
+import { Grid, SelectChangeEvent, Typography } from "@mui/material";
 import React from "react";
 import { Maybe } from "../../__generated__/graphql";
 import SearchBar from "../search-bar/search-bar.component";
-
-type Option = { title: string; value: string };
+import { Option } from "../types";
 
 type Props = {
   name?: Maybe<string>;
   loading: boolean;
-  onChange: (event: any) => void;
-  options: Option[] | undefined;
+  onSearchInputChange: (
+    event: React.SyntheticEvent<Element, Event>,
+    value: string
+  ) => void;
+  options: Option<unknown>[] | undefined;
+  onSelectChange: (event: SelectChangeEvent, value: any) => void;
+  inputValue?: string;
+  selectedValue?: Option<unknown>;
+  placeholder?: string;
 };
 
 const SideNav = (props: Props) => {
-  const { name, loading, onChange, options } = props;
+  const {
+    name,
+    loading,
+    onSearchInputChange,
+    onSelectChange,
+    options,
+    selectedValue,
+    inputValue,
+    placeholder,
+  } = props;
   return (
-    <Grid item bgcolor="#121111c2" xs={2}>
-      <SearchBar options={options} onInputChange={onChange} loading={loading} />
+    <Grid item bgcolor="#121111c2" xs={2} height="100%" padding={3}>
+      <SearchBar
+        options={options}
+        placeholder={placeholder}
+        onInputChange={onSearchInputChange}
+        inputValue={inputValue}
+        value={selectedValue}
+        onSelectChange={onSelectChange}
+        loading={loading}
+      />
       <Typography variant="h4" component="div" color="white">
         {name}
       </Typography>
