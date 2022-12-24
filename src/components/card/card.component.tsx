@@ -82,13 +82,13 @@ export default function MediaCard(props: Props) {
 
           {(isShowDetails || window.innerWidth < 800) && (
             <CardContent
-              style={{
+              sx={{
                 backgroundColor: "#00000050",
-                height: "30%",
+                height: "40%",
                 width: "100%",
                 position: "absolute",
                 bottom: "0px",
-                padding: "0 10px",
+                padding: "10px",
               }}
             >
               <Typography

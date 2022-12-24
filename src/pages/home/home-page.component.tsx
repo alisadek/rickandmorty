@@ -12,30 +12,42 @@ const Home = (props: Props) => {
   return (
     <>
       <Grid
-        sx={{ height: "80vh" }}
-        p={10}
         container
+        xs={12}
+        justifyContent="center"
         alignItems="center"
-        spacing={20}
+        minHeight="95vh"
       >
-        <ImageCard
-          onClick={() => navigate("characters")}
-          image={CharactersImage}
-          name="characters"
-        />
-        <ImageCard
-          onClick={() => navigate("episodes")}
-          image={EpisodesImage}
-          name="episodes"
-        />
-        <ImageCard
-          onClick={() => navigate("locations")}
-          image={LocationsImage}
-          name="locations"
-        />
+        <Grid
+          justifyContent="center"
+          alignItems="center"
+          container
+          xs={10}
+          spacing={10}
+        >
+          <Grid item lg={4} xs={12}>
+            <ImageCard
+              onClick={() => navigate("/characters")}
+              image={CharactersImage}
+              name="Characters"
+            />
+          </Grid>
+          <Grid item lg={4} xs={12}>
+            <ImageCard
+              onClick={() => navigate("/episodes")}
+              image={EpisodesImage}
+              name="Episodes"
+            />
+          </Grid>
+          <Grid item lg={4} xs={12}>
+            <ImageCard
+              onClick={() => navigate("/locations")}
+              image={LocationsImage}
+              name="Locations"
+            />
+          </Grid>
+        </Grid>
       </Grid>
-
-      <Outlet />
     </>
   );
 };
