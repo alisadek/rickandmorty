@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardMedia, Grid } from "@mui/material";
-import { Box } from "@mui/system";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 type Props = {
@@ -11,7 +10,7 @@ type Props = {
 
 const ImageCard = (props: Props) => {
   const { image, name, onClick } = props;
-  const [isShowDetails, setIsShowDetails] = useState(false);
+  // const [isShowDetails, setIsShowDetails] = useState(false);
   return (
     <Grid item lg={4} md={6} xs={12} onClick={onClick}>
       <Card
@@ -28,7 +27,7 @@ const ImageCard = (props: Props) => {
           style={{ objectFit: "cover" }}
           alt={name}
         />
-        {(isShowDetails || window.innerWidth < 800) && (
+        {window.innerWidth < 800 && (
           <CardContent
             style={{
               backgroundColor: "#00000050",

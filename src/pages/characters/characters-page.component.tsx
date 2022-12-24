@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
-import { GET_ALL_CHARACTERS } from "../../queries.graphql";
+import { GET_CHARACTERS } from "../../queries.graphql";
 import { Characters as CharactersType } from "../../__generated__/graphql";
 import { useQuery } from "@apollo/client";
 import { Pagination } from "@mui/material";
@@ -30,7 +30,7 @@ const Characters = (props: Props) => {
     });
   };
   const { data, loading, error } = useQuery<{ characters: CharactersType }>(
-    GET_ALL_CHARACTERS,
+    GET_CHARACTERS,
     {
       variables: {
         page: selectedPage,

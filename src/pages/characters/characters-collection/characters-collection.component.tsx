@@ -1,5 +1,6 @@
 import Grid from "@mui/material/Grid";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import LoadingCard from "../../../components/card/card-loading.component";
 import MediaCard from "../../../components/card/card.component";
 import { Character, Maybe } from "../../../__generated__/graphql";
@@ -12,7 +13,7 @@ type Props = {
 const LOADING_LIST = Array(20).fill(0, 0);
 const CharactersCollection = (props: Props) => {
   const { loading, characters } = props;
-
+  const navigate = useNavigate();
   return (
     <Grid
       sx={{ color: "#fff", maxHeight: "90vh" }}
@@ -30,6 +31,9 @@ const CharactersCollection = (props: Props) => {
               name={char?.name}
               species={char?.species}
               status={char?.status}
+              onClick={(id) => {
+                navigate(`/character/${char?.id}`);
+              }}
             />
           ))}
     </Grid>

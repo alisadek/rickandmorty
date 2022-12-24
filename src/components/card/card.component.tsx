@@ -12,6 +12,8 @@ type Props = {
   name?: Maybe<string>;
   species?: Maybe<string>;
   status?: Maybe<string>;
+  id?: Maybe<string>;
+  onClick?: (id?: string) => void;
 };
 
 type Status = "Alive" | "Dead" | "Unknown";
@@ -30,7 +32,7 @@ const statusColor: Record<Status, TColor> = {
 };
 
 export default function MediaCard(props: Props) {
-  const { image, name, species, status } = props;
+  const { image, name, species, status, onClick, id } = props;
   const [isShowDetails, setIsShowDetails] = React.useState(false);
   const handleMouseEnter = () => {
     setIsShowDetails(true);
@@ -38,9 +40,20 @@ export default function MediaCard(props: Props) {
   const handleMouseLeave = () => {
     setIsShowDetails(false);
   };
-
+  const handleClick = (id: string) => {
+    onClick && onClick(id);
+  };
   return (
-    <Grid xl={1.7} lg={3} md={4} sm={6} xs={12} item flexGrow={0}>
+    <Grid
+      xl={1.7}
+      lg={3}
+      md={4}
+      sm={6}
+      xs={12}
+      item
+      flexGrow={0}
+      onClick={() => handleClick(id as string)}
+    >
       <Card
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
