@@ -1,8 +1,8 @@
-import { Grid, SelectChangeEvent } from "@mui/material";
+import { Grid, SelectChangeEvent, Stack } from "@mui/material";
 import React from "react";
 import FilterAccordion from "../filter-accordion/filter-accordion.component";
 import SearchBar from "../search-bar/search-bar.component";
-import { Option } from "../types";
+import { Filters, Option } from "../types";
 
 type Props = {
   loading: boolean;
@@ -15,10 +15,11 @@ type Props = {
   inputValue?: string;
   selectedValue?: Option<unknown>;
   placeholder?: string;
-  onFilterChange?: (filter: Record<string, string>) => void;
+  onFilterChange?: (filter: Filters) => void;
   setFilters?: React.Dispatch<React.SetStateAction<string[]>>;
-  activeFilters?: Record<string, string>;
+  activeFilters?: Filters;
   withFilters?: boolean;
+  clearFilters?: () => void;
 };
 
 const SideNav = (props: Props) => {
@@ -32,9 +33,18 @@ const SideNav = (props: Props) => {
     placeholder,
     activeFilters,
     onFilterChange,
+    clearFilters,
+    withFilters = false,
   } = props;
   return (
-    <Grid xs={12} item bgcolor="#121111c2" height="100%" padding={3}>
+    <Stack
+      padding={2}
+      spacing={3}
+      bgcolor="#121111c2"
+      height="100%"
+      width="100%"
+      justifyContent="start"
+    >
       <SearchBar
         options={options}
         placeholder={placeholder}
@@ -44,11 +54,14 @@ const SideNav = (props: Props) => {
         onSelectChange={onSelectChange}
         loading={loading}
       />
-      <FilterAccordion
-        activeFilters={activeFilters}
-        onFilterValueChanged={onFilterChange}
-      />
-    </Grid>
+      {withFilters && (
+        <FilterAccordion
+          activeFilters={activeFilters}
+          onFilterValueChanged={onFilterChange}
+          clearFilters={clearFilters}
+        />
+      )}
+    </Stack>
   );
 };
 

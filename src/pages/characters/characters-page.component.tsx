@@ -8,24 +8,37 @@ import SideNav from "../../components/side-nav/side-nav.component";
 import { debounce } from "lodash";
 import CharactersCollection from "./characters-collection/characters-collection.component";
 import Stack from "@mui/material/Stack";
+import { Filters } from "../../components/types";
 
 type Props = {};
-type Filters = Record<string, string>;
 const Characters = (props: Props) => {
-  const [selectedPage, setSelectedPage] = useState(1);
+  const [selectedPage, setSelectedPage] = useState<number | null>();
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [activeFilters, setActiveFilters] = useState<Filters>({
     status: "",
     species: "",
     gender: "",
   });
-  const handleFilterChange = (filter: Record<string, string>) => {
+  const handleFilterChange = (filter: Filters) => {
     setActiveFilters({ ...activeFilters, ...filter });
+  };
+  const clearFilters = () => {
+    setActiveFilters({
+      status: "",
+      species: "",
+      gender: "",
+    });
   };
   const { data, loading, error } = useQuery<{ characters: CharactersType }>(
     GET_ALL_CHARACTERS,
     {
-      variables: { page: selectedPage, name: searchValue },
+      variables: {
+        page: selectedPage,
+        name: searchValue,
+        status: activeFilters.status,
+        species: activeFilters.species,
+        gender: activeFilters.gender,
+      },
     }
   );
   const handleChange = (e: React.ChangeEvent<unknown>, value: number) =>
@@ -50,6 +63,7 @@ const Characters = (props: Props) => {
           image: char?.image,
           status: char?.status,
           species: char?.species,
+          gender: char?.gender,
         },
       })),
     [data]
@@ -67,6 +81,7 @@ const Characters = (props: Props) => {
           onFilterChange={handleFilterChange}
           activeFilters={activeFilters}
           onSearchInputChange={searchDelayed}
+          clearFilters={clearFilters}
           inputValue={searchValue}
           options={options}
         />
@@ -82,7 +97,7 @@ const Characters = (props: Props) => {
             variant="outlined"
             count={data?.characters.info?.pages as number}
             onChange={handleChange}
-            page={selectedPage}
+            page={selectedPage || 1}
           />
         </Stack>
       </Grid>

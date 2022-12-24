@@ -4,17 +4,31 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Checkbox, Chip, Grid } from "@mui/material";
+import { Button, Checkbox, Chip, Grid } from "@mui/material";
+import { Filters, FilterTypes } from "../types";
 
 const FILTERS = [
   { name: "Status", options: ["Alive", "Dead", "Unknown"] },
-  { name: "Species", options: ["Alive", "Dead", "Unknown"] },
-  { name: "Gender", options: ["Alive", "Dead", "Unknown"] },
+  {
+    name: "Species",
+    options: [
+      "Alien",
+      "Humanoid",
+      "Animal",
+      "Human",
+      "Poopybutthole",
+      "unknown",
+      "Mythological Creature",
+      "Disease",
+    ],
+  },
+  { name: "Gender", options: ["Male", "Female", "Genderless", "unknown"] },
 ];
 
 type Props = {
-  onFilterValueChanged?: (filter: Record<string, string>) => void;
-  activeFilters?: Record<string, string>;
+  onFilterValueChanged?: (filter: Filters) => void;
+  activeFilters?: Filters;
+  clearFilters?: () => void;
 };
 
 const FilterAccordion = (props: Props) => {
@@ -24,8 +38,8 @@ const FilterAccordion = (props: Props) => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
-  const { activeFilters, onFilterValueChanged } = props;
-  const handleFilterSelect = (filter: Record<string, string>) => {
+  const { activeFilters, onFilterValueChanged, clearFilters } = props;
+  const handleFilterSelect = (filter: Filters) => {
     onFilterValueChanged?.(filter);
   };
   return (
@@ -46,20 +60,40 @@ const FilterAccordion = (props: Props) => {
           </AccordionSummary>
           <AccordionDetails>
             {filter.options.map((op) => (
-              <Grid container alignItems="center">
-                <Chip
-                  variant={
-                    !activeFilters?.[filter.name] ? "outlined" : "filled"
-                  }
-                  onClick={() => handleFilterSelect({ [filter.name]: op })}
-                  title={op}
-                  label={op}
-                />
+              <Grid
+                container
+                height="100%"
+                paddingX={2}
+                alignItems="start"
+                spacing={3}
+                direction="column"
+              >
+                <Grid item>
+                  <Chip
+                    variant={
+                      activeFilters?.[
+                        filter.name.toLocaleLowerCase() as FilterTypes
+                      ] !== op
+                        ? "outlined"
+                        : "filled"
+                    }
+                    onClick={() =>
+                      handleFilterSelect({
+                        [filter.name.toLocaleLowerCase()]: op,
+                      } as Filters)
+                    }
+                    title={op}
+                    label={op}
+                  />
+                </Grid>
               </Grid>
             ))}
           </AccordionDetails>
         </MUIAccordion>
       ))}
+      <Button onClick={clearFilters} variant="text">
+        Clear Filters
+      </Button>
     </div>
   );
 };
