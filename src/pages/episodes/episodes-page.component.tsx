@@ -9,7 +9,7 @@ import {
 } from "../../__generated__/graphql";
 import { useQuery } from "@apollo/client";
 import { SelectChangeEvent, Stack, Typography } from "@mui/material";
-import SideNav from "../../components/side-nav/side-nav.component";
+import SidePanel from "../../components/side-panel/side-panel.component";
 import { Option } from "../../components/types";
 import Pagination from "@mui/material/Pagination";
 import { debounce } from "lodash";
@@ -83,8 +83,8 @@ const Characters = (props: Props) => {
 
   return (
     <Grid container xs={12} height="95vh">
-      <Grid container item xs={2}>
-        <SideNav
+      <Grid container item xs={2} height="100%">
+        <SidePanel
           loading={epLoading}
           placeholder="Search Episode"
           onSearchInputChange={searchDelayed}

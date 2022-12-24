@@ -4,11 +4,11 @@ import { GET_CHARACTERS } from "../../queries.graphql";
 import { Characters as CharactersType } from "../../__generated__/graphql";
 import { useQuery } from "@apollo/client";
 import { Pagination } from "@mui/material";
-import SideNav from "../../components/side-nav/side-nav.component";
 import { debounce } from "lodash";
 import CharactersCollection from "./characters-collection/characters-collection.component";
 import Stack from "@mui/material/Stack";
 import { Filters } from "../../components/types";
+import SidePanel from "../../components/side-panel/side-panel.component";
 
 type Props = {};
 const Characters = (props: Props) => {
@@ -74,7 +74,7 @@ const Characters = (props: Props) => {
   return (
     <Grid container xs={12} height="95vh">
       <Grid container item xs={2}>
-        <SideNav
+        <SidePanel
           loading={loading}
           placeholder="Search Characters"
           withFilters

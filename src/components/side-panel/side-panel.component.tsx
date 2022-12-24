@@ -22,7 +22,7 @@ type Props = {
   clearFilters?: () => void;
 };
 
-const SideNav = (props: Props) => {
+const SidePanel = (props: Props) => {
   const {
     loading,
     onSearchInputChange,
@@ -41,7 +41,7 @@ const SideNav = (props: Props) => {
       padding={2}
       spacing={3}
       bgcolor="#121111c2"
-      height="100%"
+      height="95vh"
       width="100%"
       justifyContent="start"
     >
@@ -65,4 +65,4 @@ const SideNav = (props: Props) => {
   );
 };
 
-export default SideNav;
+export default SidePanel;
