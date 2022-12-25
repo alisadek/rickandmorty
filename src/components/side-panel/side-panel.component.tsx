@@ -29,7 +29,6 @@ const SidePanel = (props: Props) => {
     onSelectChange,
     options,
     selectedValue,
-    inputValue,
     placeholder,
     activeFilters,
     onFilterChange,
@@ -41,7 +40,6 @@ const SidePanel = (props: Props) => {
       padding={2}
       spacing={3}
       bgcolor="#121111c2"
-      height="95vh"
       width="100%"
       justifyContent="start"
     >
@@ -49,7 +47,6 @@ const SidePanel = (props: Props) => {
         options={options}
         placeholder={placeholder}
         onInputChange={onSearchInputChange}
-        inputValue={inputValue}
         value={selectedValue}
         onSelectChange={onSelectChange}
         loading={loading}

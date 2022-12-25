@@ -32,7 +32,6 @@ export default function SearchBar(props: Props) {
       getOptionLabel={(option) => option.label}
       options={options || [{ label: "", value: "" }]}
       onInputChange={onInputChange}
-      value={props.value}
       inputValue={props.inputValue}
       placeholder={placeholder || "Search..."}
       onChange={onSelectChange}

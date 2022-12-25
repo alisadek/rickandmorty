@@ -79,24 +79,24 @@ const Characters = (props: Props) => {
   ) => {
     setSearchValue(value);
   };
-  const searchDelayed = debounce(handleSearchChange, 200);
+  const searchDelayed = debounce(handleSearchChange, 300);
 
   return (
-    <Grid container xs={12} height="95vh">
-      <Grid container item xs={2} height="100%">
+    <Grid container item xs={12} height="95vh">
+      <Grid container item md={2} xs={12}>
         <SidePanel
           loading={epLoading}
           placeholder="Search Episode"
           onSearchInputChange={searchDelayed}
           onSelectChange={handleSelectChange}
-          inputValue={searchValue}
           options={options}
         />
       </Grid>
 
       {!selectedEpisode ? (
         <Grid
-          xs={10}
+          xs={12}
+          md={10}
           alignItems="center"
           justifyContent="center"
           container

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { GET_CHARACTERS } from "../../queries.graphql";
 import { Characters as CharactersType } from "../../__generated__/graphql";
@@ -52,7 +52,7 @@ const Characters = (props: Props) => {
   ) => {
     setSearchValue(value);
   };
-  const searchDelayed = debounce(handleSearchChange, 200);
+  const searchDelayed = debounce(handleSearchChange, 300);
   const options = useMemo(
     () =>
       data?.characters?.results?.map((char) => ({
@@ -68,11 +68,8 @@ const Characters = (props: Props) => {
       })),
     [data]
   );
-  useEffect(() => {
-    console.log("Active Filters: ", activeFilters);
-  }, [activeFilters]);
   return (
-    <Grid container xs={12} height="95vh">
+    <Grid container item xs={12} height="95vh">
       <Grid container item xs={2}>
         <SidePanel
           loading={loading}
@@ -82,7 +79,6 @@ const Characters = (props: Props) => {
           activeFilters={activeFilters}
           onSearchInputChange={searchDelayed}
           clearFilters={clearFilters}
-          inputValue={searchValue}
           options={options}
         />
       </Grid>
