@@ -10,7 +10,6 @@ import {
   Location,
   Maybe,
 } from "../../__generated__/graphql";
-import LoadingCard from "../../components/card/card-loading.component";
 
 type Props = {};
 
@@ -22,6 +21,9 @@ const CharacterWiki = (props: Props) => {
       variables: { id },
     }
   );
+  useEffect(() => {
+    console.log("Character", data?.character);
+  }, [data]);
   const characterInfo = useMemo(() => {
     const value = data?.character;
     return {
@@ -38,7 +40,6 @@ const CharacterWiki = (props: Props) => {
   return (
     <Grid
       container
-      item
       xs={12}
       padding={5}
       alignItems="center"
@@ -55,53 +56,56 @@ const CharacterWiki = (props: Props) => {
         lg={4}
         md={6}
       >
-        {loading ? (
-          <LoadingCard />
-        ) : (
-          <Card
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "20px",
-            }}
-          >
-            <Typography sx={{ height: "20%" }} variant="h6" component="div">
-              {characterInfo.Name}
-            </Typography>
-            <CardMedia
-              sx={{ width: "60%" }}
-              src={data?.character.image as string}
-              component="img"
-            />
-            <CardContent sx={{ width: "70%", height: "50%" }}>
-              <Grid container item xs={12} direction="column" padding={3}>
-                {data &&
-                  Object.entries(characterInfo).map(([key, value]) => (
-                    <Grid
-                      key={key}
-                      container
-                      item
-                      xs={12}
-                      justifyContent="space-between"
-                      alignItems="center"
+        <Card
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "20px",
+          }}
+        >
+          <Typography sx={{ height: "20%" }} variant="h6" component="div">
+            {characterInfo.Name}
+          </Typography>
+          <CardMedia
+            sx={{ width: "60%" }}
+            src={data?.character.image as string}
+            component="img"
+          />
+          <CardContent sx={{ width: "70%", height: "50%" }}>
+            <Grid
+              // minHeight="100%"
+              container
+              // flexGrow={2.5}
+              item
+              xs={12}
+              direction="column"
+              padding={3}
+            >
+              {data &&
+                Object.entries(characterInfo).map(([key, value]) => (
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography variant="h6">{key}</Typography>
+                    <Typography
+                      sx={{ textAlign: "start", width: "60%" }}
+                      component="div"
+                      variant="body1"
                     >
-                      <Typography variant="h6">{key}</Typography>
-                      <Typography
-                        sx={{ textAlign: "start", width: "60%" }}
-                        component="div"
-                        variant="body1"
-                      >
-                        {value}
-                      </Typography>
-                    </Grid>
-                  ))}
-              </Grid>
-            </CardContent>
-          </Card>
-        )}
+                      {value}
+                    </Typography>
+                  </Grid>
+                ))}
+            </Grid>
+          </CardContent>
+        </Card>
       </Grid>
     </Grid>
   );
