@@ -4,7 +4,7 @@ import ImageCard from "../../components/image-card/image-card.component";
 import EpisodesImage from "../../assets/rickandmortyrun.jpg";
 import LocationsImage from "../../assets/portal.jpg";
 import CharactersImage from "../../assets/characters.jpg";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const Home = (props: Props) => {

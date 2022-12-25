@@ -65,9 +65,7 @@ const LocationsPage = (props: Props) => {
       );
     setCharacters(newChars);
   }, [selectedLocation, selectedPage]);
-  useEffect(() => {
-    console.log("DATA: ", data);
-  }, [data]);
+
   const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) =>
     setSelectedPage(value);
 
