@@ -1,4 +1,4 @@
-import { Grid, SelectChangeEvent, Stack } from "@mui/material";
+import { SelectChangeEvent, Stack } from "@mui/material";
 import React from "react";
 import FilterAccordion from "../filter-accordion/filter-accordion.component";
 import SearchBar from "../search-bar/search-bar.component";
