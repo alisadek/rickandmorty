@@ -4,7 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button, Checkbox, Chip, Grid } from "@mui/material";
+import { Button,  Chip, Grid } from "@mui/material";
 import { Filters, FilterTypes } from "../types";
 
 const FILTERS = [
@@ -46,6 +46,7 @@ const FilterAccordion = (props: Props) => {
     <div>
       {FILTERS.map((filter) => (
         <MUIAccordion
+          key={filter.name}
           expanded={expanded === filter.name}
           onChange={handleChange(filter.name)}
         >
@@ -61,6 +62,7 @@ const FilterAccordion = (props: Props) => {
           <AccordionDetails>
             {filter.options.map((op) => (
               <Grid
+                key={op}
                 container
                 height="100%"
                 paddingX={2}

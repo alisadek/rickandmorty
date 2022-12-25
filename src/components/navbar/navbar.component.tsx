@@ -14,22 +14,20 @@ export default function NavBar() {
       <AppBar position="static" sx={{ backgroundColor: "#000" }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Grid container>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Button onClick={() => navigate("/")}>Home</Button>
+            <img
+              onClick={() => navigate("/")}
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Rick_and_Morty.svg"
+              alt="logo"
+              style={{ objectFit: "contain", cursor: "pointer" }}
+              width="100px"
+            />
           </Grid>
           <Grid
             width="40%"
             justifyContent="flex-end"
             container
             gap={4}
+            flexWrap="nowrap"
             flexDirection="row"
           >
             <Button

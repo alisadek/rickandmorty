@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardMedia, Grid } from "@mui/material";
+import { Card, CardMedia } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 type Props = {
